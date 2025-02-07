@@ -1,10 +1,27 @@
-#cloud-config
 autoinstall:
   version: 1
   identity:
-    hostname: ubuntu-server
-    username: ubuntu
-    password: "$6$examplestring$hashedpassword"
+    hostname: PI_Explorer
+    username: piadmin
+    password: "$6$a/U129tGznAA1mVK$/6kjNV6GyMxh6/rlL79neoqFt46PWz/zgMLjneLLnj.Tg/kjgbnRE5Rlp10aelBcSWo1/x8Tb2F7YMOKC3nB60"
   storage:
     layout:
       name: lvm
+  packages:
+    - net-tools
+    - docker.io
+    - docker-compose
+    - openssh-server
+    - ratpoison
+    - aspnetcore-runtime-8.0  # Add ASP.NET Core runtime
+    - chrony  # Add Chrony for NTP synchronization
+  late-commands:
+    - curtin in-target -- apt update
+    - curtin in-target -- sudo ufw allow ssh  
+    - curtin in-target -- sed -i 's/^pool /#pool /g' /etc/chrony/chrony.conf
+    - curtin in-target -- bash -c 'echo "allow 0/0" >> /etc/chrony/chrony.conf'
+    - curtin in-target -- systemctl restart chrony
+    
+    
+
+    
