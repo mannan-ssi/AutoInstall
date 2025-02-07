@@ -8,5 +8,3 @@ autoinstall:
   storage:
     layout:
       name: lvm
-  ssh:
-    install-server: true
