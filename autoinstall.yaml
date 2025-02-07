@@ -1,33 +1,12 @@
+#cloud-config
 autoinstall:
   version: 1
   identity:
-    hostname: PI_Explorer
-    username: piadmin
-    password: "$6$a/U129tGznAA1mVK$/6kjNV6GyMxh6/rlL79neoqFt46PWz/zgMLjneLLnj.Tg/kjgbnRE5Rlp10aelBcSWo1/x8Tb2F7YMOKC3nB60"
+    hostname: ubuntu-server
+    username: ubuntu
+    password: "$6$examplestring$hashedpassword"
   storage:
     layout:
       name: lvm
-  packages:
-    - net-tools
-    - docker.io
-    - docker-compose
-    - openssh-server
-    - ratpoison
-    - aspnetcore-runtime-8.0  # Add ASP.NET Core runtime
-    - chrony  # Add Chrony for NTP synchronization
-    - xscreensaver xscreensaver-gl
-  late-commands:
-    - curtin in-target -- apt update
-    - curtin in-target -- sudo ufw allow ssh  
-    - curtin in-target -- sed -i 's/^pool /#pool /g' /etc/chrony/chrony.conf
-    - curtin in-target -- bash -c 'echo "allow 0/0" >> /etc/chrony/chrony.conf'
-    - curtin in-target -- systemctl restart chrony
-    - curtin in-target -- DEBIAN_FRONTEND=noninteractive apt-get install -y /cdrom/urouter_3.0.13_all.deb
-    - curtin in-target -- cp -r aeitheme /usr/share/plymouth/themes/
-    - curtin in-target -- update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/aeitheme/aeitheme.plymouth 110
-    - curtin in-target -- update-alternatives --config default.plymouth
-    - curtin in-target -- update-initramfs -u -k all
-    
-    
-
-    
+  ssh:
+    install-server: true
