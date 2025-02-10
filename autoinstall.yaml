@@ -7,6 +7,9 @@ autoinstall:
   storage:
     layout:
       name: lvm
+  network:
+    version: 2
+    interactive: true  # Enable interactive network configuration    
   packages:
     - net-tools
     - docker.io
