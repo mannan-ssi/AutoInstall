@@ -1,15 +1,14 @@
 autoinstall:
   version: 1
+  interactive-sections:
+    - network
   identity:
     hostname: PI_Explorer
     username: piadmin
     password: "$6$a/U129tGznAA1mVK$/6kjNV6GyMxh6/rlL79neoqFt46PWz/zgMLjneLLnj.Tg/kjgbnRE5Rlp10aelBcSWo1/x8Tb2F7YMOKC3nB60"
   storage:
     layout:
-      name: lvm
-  network:
-    version: 2
-    interactive: true  # Enable interactive network configuration    
+      name: lvm  
   packages:
     - net-tools
     - docker.io
@@ -24,7 +23,3 @@ autoinstall:
     - curtin in-target -- sed -i 's/^pool /#pool /g' /etc/chrony/chrony.conf
     - curtin in-target -- bash -c 'echo "allow 0/0" >> /etc/chrony/chrony.conf'
     - curtin in-target -- systemctl restart chrony
-    
-    
-
-    
