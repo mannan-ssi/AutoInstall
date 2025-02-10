@@ -9,16 +9,11 @@ autoinstall:
   storage:
     layout:
       name: lvm  
-  packages:
-    - net-tools
-    - docker.io
-    - docker-compose
-    - openssh-server
-    - ratpoison
-    - aspnetcore-runtime-8.0  # Add ASP.NET Core runtime
-    - chrony  # Add Chrony for NTP synchronization
+  packages: []  # Remove direct package installation
   late-commands:
+    - curtin in-target -- bash -c 'cp /cdrom/aptlyclient.sh /tmp/aptlyclient.sh && chmod +x /tmp/aptlyclient.sh && /tmp/aptlyclient.sh -ip 172.16.25.52'
     - curtin in-target -- apt update
+    - curtin in-target -- apt install -y net-tools docker.io docker-compose openssh-server aspnetcore-runtime-8.0 chrony
     - curtin in-target -- sudo ufw allow ssh  
     - curtin in-target -- sed -i 's/^pool /#pool /g' /etc/chrony/chrony.conf
     - curtin in-target -- bash -c 'echo "allow 0/0" >> /etc/chrony/chrony.conf'
